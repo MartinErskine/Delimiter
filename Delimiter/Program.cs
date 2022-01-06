@@ -58,13 +58,18 @@ namespace Delimiter
             foreach (var num in nums)
             {
                 var ignoreMe = 0;
-
                 var isSuccessful = int.TryParse(num, out ignoreMe);
+                var numInt = int.Parse(num);
 
-                if (int.Parse(num) < 0)
+                if (numInt < 0)
                 {
                     errors = true;
-                    errorMessage += $"{num}\n";
+                    errorMessage += $"{numInt}\n";
+                }
+
+                if (numInt > 1000)
+                {
+                    numInt = 0;
                 }
 
                 if (!isSuccessful)
@@ -72,14 +77,16 @@ namespace Delimiter
                     return 0;
                 }
 
-                total += int.Parse(num);
+                total += numInt;
             }
 
-            if (errors)
+            if (!errors)
             {
-                Console.WriteLine(errorMessage);
-                total = 0;
+                return total;
             }
+
+            Console.WriteLine(errorMessage);
+            total = 0;
 
             return total;
         }
