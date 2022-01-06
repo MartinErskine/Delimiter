@@ -1,6 +1,7 @@
 ﻿using Fclp;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Delimiter
 {
@@ -24,23 +25,40 @@ namespace Delimiter
 
             if (args.Length > 0)
             {
-                var delimiter = ",";
-
-                if (args[0].StartsWith("//"))
-                {
-                    var delimiterProvided = args[0].Split(@"\n");
-
-                    delimiter = delimiterProvided[0].Substring(2);
-                    var body = delimiterProvided[1];
-
-                    return Parse(body, delimiter);
-                }
-
-                return Parse(args[0], delimiter);
-
+                return ParseDelimiter(args);
             }
 
             return 0;
+        }
+
+        private static int ParseDelimiter(string[] args)
+        {
+            var delimiter = ",";
+
+            if (args[0].StartsWith("//"))
+            {
+                var delimiterProvided = args[0].Split(@"\n");
+
+                if (delimiterProvided[0].Contains("[") && delimiterProvided[0].Contains("]"))
+                {
+                    var pattern = @"\[(.*?)\]";
+
+                    delimiter = Regex.Matches(delimiterProvided[0], pattern).Cast<Match>()
+                        .Select(m => m.Groups[1].Value)
+                        .FirstOrDefault();
+                }
+                else
+                {
+                    delimiter = delimiterProvided[0].Substring(2);
+                }
+                
+                var body = delimiterProvided[1];
+
+                return Parse(body, delimiter);
+                
+            }
+
+            return Parse(args[0], delimiter);
         }
 
         private static int Parse(string str, string delimiter)
