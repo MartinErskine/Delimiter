@@ -2,7 +2,7 @@
   "profiles": {
     "Delimiter": {
       "commandName": "Project",
-      "commandLineArgs": "//[***]\\n1***2***3"
+      "commandLineArgs": "//[***][...]\\n1***2...3"
     }
   }
 }
