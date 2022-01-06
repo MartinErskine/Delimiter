@@ -45,15 +45,14 @@ namespace Delimiter
 
         private static int Parse(string str, string delimiter)
         {
-            if (str.Contains("\n"))
+            if (str.Contains(@"\n"))
             {
                 str = str.Replace(@"\n", delimiter);
             }
 
-
+            var errorMessage = "Negative numbers were provided:\n";
+            var errors = false;
             var nums = str.Split(delimiter);
-
-
             var total = 0;
 
             foreach (var num in nums)
@@ -61,6 +60,12 @@ namespace Delimiter
                 var ignoreMe = 0;
 
                 var isSuccessful = int.TryParse(num, out ignoreMe);
+
+                if (int.Parse(num) < 0)
+                {
+                    errors = true;
+                    errorMessage += $"{num}\n";
+                }
 
                 if (!isSuccessful)
                 {
@@ -70,11 +75,13 @@ namespace Delimiter
                 total += int.Parse(num);
             }
 
+            if (errors)
+            {
+                Console.WriteLine(errorMessage);
+                total = 0;
+            }
+
             return total;
-
-
-
-            return 0;
         }
     }
 }
