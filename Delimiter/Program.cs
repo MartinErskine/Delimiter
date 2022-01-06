@@ -64,7 +64,9 @@ namespace Delimiter
                 return Parse(body, delimiters);
             }
 
-            return Parse(args[0], delimiter);
+            delimiters.Add(delimiter);
+
+            return Parse(args[0], delimiters);
         }
 
         private static int Parse(string str, List<string> delimiterList)
@@ -117,52 +119,52 @@ namespace Delimiter
         }
 
 
-        private static int Parse(string str, string delimiter)
-        {
-            if (str.Contains(@"\n"))
-            {
-                str = str.Replace(@"\n", delimiter);
-            }
+        //private static int Parse(string str, string delimiter)
+        //{
+        //    if (str.Contains(@"\n"))
+        //    {
+        //        str = str.Replace(@"\n", delimiter);
+        //    }
 
-            var errorMessage = "Negative numbers were provided:\n";
-            var errors = false;
-            var nums = str.Split(delimiter);
-            var total = 0;
+        //    var errorMessage = "Negative numbers were provided:\n";
+        //    var errors = false;
+        //    var nums = str.Split(delimiter);
+        //    var total = 0;
 
-            foreach (var num in nums)
-            {
-                var ignoreMe = 0;
-                var isSuccessful = int.TryParse(num, out ignoreMe);
-                var numInt = int.Parse(num);
+        //    foreach (var num in nums)
+        //    {
+        //        var ignoreMe = 0;
+        //        var isSuccessful = int.TryParse(num, out ignoreMe);
+        //        var numInt = int.Parse(num);
 
-                if (numInt < 0)
-                {
-                    errors = true;
-                    errorMessage += $"{numInt}\n";
-                }
+        //        if (numInt < 0)
+        //        {
+        //            errors = true;
+        //            errorMessage += $"{numInt}\n";
+        //        }
 
-                if (numInt > 1000)
-                {
-                    numInt = 0;
-                }
+        //        if (numInt > 1000)
+        //        {
+        //            numInt = 0;
+        //        }
 
-                if (!isSuccessful)
-                {
-                    return 0;
-                }
+        //        if (!isSuccessful)
+        //        {
+        //            return 0;
+        //        }
 
-                total += numInt;
-            }
+        //        total += numInt;
+        //    }
 
-            if (!errors)
-            {
-                return total;
-            }
+        //    if (!errors)
+        //    {
+        //        return total;
+        //    }
 
-            Console.WriteLine(errorMessage);
-            total = 0;
+        //    Console.WriteLine(errorMessage);
+        //    total = 0;
 
-            return total;
-        }
+        //    return total;
+        //}
     }
 }
