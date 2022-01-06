@@ -56,7 +56,7 @@ namespace Delimiter
                 }
                 else
                 {
-                    delimiter = delimiterProvided[0].Substring(2);
+                    delimiters.Add(delimiterProvided[0].Substring(2));
                 }
                 
                 var body = delimiterProvided[1];
