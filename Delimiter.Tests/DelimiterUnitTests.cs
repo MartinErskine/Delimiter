@@ -4,7 +4,7 @@ namespace Delimiter.Tests
 {
     public class DelimiterUnitTests
     {
-        private DelimiterService _delimiterService;
+        private IDelimiterService _delimiterService;
 
         [SetUp]
         public void Setup()
@@ -23,7 +23,7 @@ namespace Delimiter.Tests
         }
 
         [Test]
-        public void OneValueReturnsOneValue()
+        public void SingleValueReturnsSameProvidedValue()
         {
             string[] argument = { "1" };
 
@@ -65,6 +65,7 @@ namespace Delimiter.Tests
         [Test]
         public void NegativeValuesReturnListOfNegativesProvided()
         {
+            //In this case the Console output is not available here.
             string[] argument = { @"1,-2,3,4,-5,6,7" };
 
             var result = _delimiterService.Add(argument);
